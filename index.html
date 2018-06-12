@@ -19,7 +19,7 @@
     <!--styling-->
     <link type="text/css" rel="stylesheet" href="css/style.css">
     <!--game-->
-    <script type="javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
     <title>Cookie Clicker</title>
 </head>
 <body>
@@ -28,24 +28,26 @@
     <div class="col-md-3 offset-md-4">
         <div class="card no-border">
             <div class="text-center margintop-10 ">
-                <span class="badge badge-pill badge-dark">6565 cookies/s</span>
+                <span class="badge badge-pill badge-dark" id="cookies-per-second">0</span> cookies/s
             </div>
             <img class="card-img-top" src="img/cookie.png" alt="cookie" id="cookie">
             <div class="card-body paddingtop-5">
                 <h5 class="card-title text-center">
-                    <span class="badge badge-pill badge-success">172512 cookies</span>
+                    <span class="badge badge-pill badge-success" id="cookie-counter">0</span> cookies
                 </h5>
                 <div class="list-group">
                     <div class="list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">Auto Clicker
-                                <small>(100 cookies required)</small>
+                                <small>(<span id="auto-clicker-costs">10</span> cookies required)</small>
                             </h5>
-                            <small><span class="badge badge-info badge-pill">4x/s</span></small>
+                            <small>
+                                <span class="badge badge-info badge-pill">+<span id="auto-clicker-value">0</span> cookies/s</span>
+                            </small>
                         </div>
                         <small>clicks automatically on the cookie</small>
                         <p class="mb-1">
-                            <button type="button" class="btn btn-primary btn-sm">+1/s</button>
+                            <button type="button" class="btn btn-primary btn-sm disabled" id="auto-clicker-btn">+1 cookie/s</button>
                         </p>
                     </div>
                     <div class="list-group-item flex-column align-items-start">
