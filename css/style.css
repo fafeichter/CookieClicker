@@ -1,19 +1,47 @@
-.margintop-75 {
-    margin-top: 75px;
+.margintop-50 {
+    margin-top: 50px;
 }
 
-.margintop-10 {
-    margin-top: 10px;
+.marginbottom-10 {
+    margin-bottom: 10px;
 }
 
 .paddingtop-5 {
     padding-top: 5px;
 }
 
+.no-border {
+    border: none;
+}
+
+.text-white {
+    color: white;
+}
+
 .list-group-item {
     margin-top: 15px;
 }
 
-.no-border {
-    border: none;
+.transparent {
+    background-color: transparent;
+}
+
+.background {
+    background-image: url("../img/kruemelmonster.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.badge-brown {
+    color: #fff;
+    background-color: #A05A2C;
+}
+
+.cookie {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    cursor: pointer;
 }

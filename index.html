@@ -2,90 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!--bootstrap-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-            crossorigin="anonymous"></script>
-    <!--jQuery-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--styling-->
     <link type="text/css" rel="stylesheet" href="css/style.css">
-    <!--game-->
     <script type="text/javascript" src="js/game.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <title>Cookie Clicker</title>
 </head>
-<body>
-
-<div class="row margintop-75">
+<body class="background">
+<div class="row margintop-50">
     <div class="col-md-3 offset-md-4">
-        <div class="card no-border">
-            <div class="text-center margintop-10 ">
+        <div class="card no-border transparent">
+            <div class="text-center marginbottom-10">
                 <span class="badge badge-pill badge-dark" id="cookies-per-second">0</span> cookies/s
             </div>
-            <img class="card-img-top" src="img/cookie.png" alt="cookie" id="cookie">
+            <img class="card-img-top cookie" src="img/cookie.png" alt="cookie" id="cookie">
             <div class="card-body paddingtop-5">
-                <h5 class="card-title text-center">
-                    <span class="badge badge-pill badge-success" id="cookie-counter">0</span> cookies
+                <h5 class="card-title text-center text-white">
+                    <span class="badge badge-pill badge-brown" id="cookie-counter">0</span> cookies
                 </h5>
                 <div class="list-group">
                     <div class="list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Auto Clicker
-                                <small>(<span id="auto-clicker-costs">10</span> cookies required)</small>
-                            </h5>
+                            <h5 class="mb-0">Auto-Clicker</h5>
                             <small>
-                                <span class="badge badge-info badge-pill">+ <span id="auto-clicker-value">0</span> cookies/s</span>
+                                <span class="badge badge-secondary badge-pill">+ <span id="auto-clicker-value">0</span> cookies/s</span>
                             </small>
                         </div>
-                        <small>clicks automatically on the cookie</small>
-                        <p class="mb-1">
-                            <button type="button" class="btn btn-primary btn-sm disabled" id="auto-clicker-btn">+ <span id="auto-clicker-growth">1</span> cookie/s</button>
-                        </p>
-                    </div>
-                    <div class="list-group-item flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Multiplier
-                                <small>(<span id="multiplier-costs">100</span> cookies required)</small>
-                            </h5>
+                        <div class="marginbottom-10">
+                            <small>Clicks automatically on the cookie.</small>
+                            <br>
                             <small>
-                                <span class="badge badge-info badge-pill">x <span id="multiplier-value">1.0</span></span>
+                                <i><span id="auto-clicker-costs">10</span> cookies required</i>
                             </small>
                         </div>
-                        <small>increase the number of cookies when clicked</small>
                         <p class="mb-1">
-                            <button type="button" class="btn btn-primary btn-sm disabled" id="multiplier-btn">x <span id="multiplier-growth">1.3</span></button>
+                            <button type="button" class="btn btn-success btn-sm disabled" id="auto-clicker-btn">
+                                + <span id="auto-clicker-growth">1</span> cookie/s
+                            </button>
                         </p>
                     </div>
                     <div class="list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Rare Click
-                                <small>(500 cookies required)</small>
-                            </h5>
-                            <small><span class="badge badge-info badge-pill">0.07%</span></small>
+                            <h5 class="mb-1">Multiplier</h5>
+                            <small>
+                                <span class="badge badge-secondary badge-pill">x <span id="multiplier-value">1.0</span></span>
+                            </small>
                         </div>
-                        <small>increase the chance of increasing cookies by 10%</small>
+                        <div class="marginbottom-10">
+                            <small>Increases the number of cookies on a click.</small>
+                            <br>
+                            <small>
+                                <i><span id="multiplier-costs">100</span> cookies required</i>
+                            </small>
+                        </div>
                         <p class="mb-1">
-                            <button type="button" class="btn btn-primary btn-sm">+0.01%</button>
+                            <button type="button" class="btn btn-success btn-sm disabled" id="multiplier-btn">
+                                x <span id="multiplier-growth">1.3</span>
+                            </button>
                         </p>
                     </div>
                     <div class="list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Rare Click
-                                <small>(500 cookies required)</small>
-                            </h5>
-                            <small><span class="badge badge-info badge-pill">0.006‰</span></small>
+                            <h5 class="mb-1">Rare Click</h5>
+                            <small><span class="badge badge-secondary badge-pill">0.07%</span></small>
                         </div>
-                        <small>increase the chance of increasing cookies by 50%</small>
+                        <div class="marginbottom-10">
+                            <small>Increase the chance of getting 10% more cookies on a click.</small>
+                            <br>
+                            <small>
+                                <i><span>500</span> cookies required</i>
+                            </small>
+                        </div>
                         <p class="mb-1">
-                            <button type="button" class="btn btn-primary btn-sm">+0.01‰</button>
+                            <button type="button" class="btn btn-success btn-sm disabled">+ 0.01%</button>
+                        </p>
+                    </div>
+                    <div class="list-group-item flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Legendary Click</h5>
+                            <small><span class="badge badge-secondary badge-pill">0.006‰</span></small>
+                        </div>
+                        <div class="marginbottom-10">
+                            <small>Increase the chance of getting twice as much cookies on a click.</small>
+                            <br>
+                            <small>
+                                <i><span>1500</span> cookies required</i>
+                            </small>
+                        </div>
+                        <p class="mb-1">
+                            <button type="button" class="btn btn-success btn-sm disabled">+ 0.01‰</button>
                         </p>
                     </div>
                 </div>
