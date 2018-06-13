@@ -2,32 +2,37 @@
 jQuery(function ($) {
 
     /**
-     *  VIEW
+     *  jQuery objects for access to the view
      */
+
     // image of cookie
-    $cookie = $('#cookie');
+    $cookieImage = $('#cookie');
 
     // number of cookies per second
     $cookiesPerSecondContainer = $('#cookies-per-second');
 
     // total amount of cookies
-    $cookieCounterContainer = $('#cookie-counter');
+    $numberOfCookiesContainer = $('#cookie-counter');
 
     // auto-clicker
-    $autoClickerBtn = $('#auto-clicker-btn');
+    $autoClickerButton = $('#auto-clicker-btn');
     $autoClickerCostsContainer = $('#auto-clicker-costs');
+    $autoClickerGrowthContainer = $('#auto-clicker-growth');
     $autoClickerValueContainer = $('#auto-clicker-value');
-    $autoClickerGrowth = $('#auto-clicker-growth');
 
-    // click on auto clicker
-    $multiplierBtn = $('#multiplier-btn');
+
+    // multiplier
+    $multiplierButton = $('#multiplier-btn');
     $multiplierCostsContainer = $('#multiplier-costs');
+    $multiplierGrowthContainer = $('#multiplier-growth');
     $multiplierValueContainer = $('#multiplier-value');
-    $multiplierGrowth = $('#multiplier-growth');
+
 
     /**
-     *  VARIABLES
+     *  variables
      */
+
+    // game
     var cookieCounter = 0;
     var cookiesPerSecond = 0;
 
@@ -36,31 +41,36 @@ jQuery(function ($) {
     var autoClickerValue = 0;
     var autoClickerGrowth = 1;
     var autoClickerInterval = null;
+    var hasAutoClicker = 0;
 
     // multiplier
     var multiplierCosts = 100;
     var multiplierValue = 1.0;
-    var multiplierGrowth = 1.301;
+    var multiplierGrowth = Math.log10(2) + 1;
     var multiplierIndex = 2.0;
 
-    var hasAutoClicker = 0;
+
+    /**
+     *  constants
+     */
 
     const AUTO_CLICKER_COSTS_MULTIPLIER = 2;
     const MULTIPLIER_COSTS_MULTIPLIER = 4;
 
     $(document).ready(function () {
+
         // click on cookie
-        $cookie.on("click", function () {
+        $cookieImage.on("click", function () {
             handleCookieClick(cookieCounter);
         });
 
         // click on auto clicker
-        $autoClickerBtn.on("click", function () {
+        $autoClickerButton.on("click", function () {
             handleAutoClickerClick();
         });
 
         // click on multiplier
-        $multiplierBtn.on("click", function () {
+        $multiplierButton.on("click", function () {
             handleMultiplierClick();
         });
 
@@ -68,14 +78,15 @@ jQuery(function ($) {
 
     function handleCookieClick() {
         cookieCounter += autoClickerValue === 0 ? 1 : autoClickerValue;
+
         updateCookieCounter(cookieCounter);
     }
 
     function handleAutoClickerClick() {
-        if (!$autoClickerBtn.hasClass('disabled')) {
+        if (!$autoClickerButton.hasClass('disabled')) {
+
             hasAutoClicker = 1;
             cookieCounter -= autoClickerCosts;
-            // y = 5x
             autoClickerCosts *= AUTO_CLICKER_COSTS_MULTIPLIER;
             autoClickerValue += multiplierValue;
             cookiesPerSecond += multiplierValue;
@@ -91,32 +102,22 @@ jQuery(function ($) {
     }
 
     function handleMultiplierClick() {
-        if (!$multiplierBtn.hasClass('disabled')) {
-
-            // y = log(x) mit x >= 2
-
-            multiplierValue *= multiplierGrowth;
-
-            autoClickerGrowth = multiplierValue;
-
-            multiplierIndex++;
-            multiplierGrowth = Math.log10(multiplierIndex) * multiplierValue + 1;
-            // cookiesPerSecond = Math.round(cookiesPerSecond * multiplierValue * 100) / 100;
+        if (!$multiplierButton.hasClass('disabled')) {
 
             cookieCounter -= multiplierCosts;
-
-            // y = 5x
             multiplierCosts *= MULTIPLIER_COSTS_MULTIPLIER;
+            multiplierValue *= multiplierGrowth;
+            autoClickerGrowth = multiplierValue;
+            multiplierIndex++;
+            multiplierGrowth = Math.log10(multiplierIndex) * multiplierValue + 1;
+
             updateMultiplierCosts();
-
             updateCookieCounter();
-
-            $multiplierGrowth.text(Math.round(multiplierGrowth * 100) / 100);
-            $multiplierValueContainer.text(Math.round(multiplierValue * 100) / 100);
-
-            $autoClickerGrowth.text(Math.round(autoClickerGrowth * 100) / 100);
+            updateMultiplierGrowth();
+            updateMultiplierValue();
 
             if (hasAutoClicker === 1) {
+
                 autoClickerValue += multiplierValue;
                 cookiesPerSecond += multiplierValue;
 
@@ -127,17 +128,20 @@ jQuery(function ($) {
 
     function timer() {
         cookieCounter += autoClickerValue;
+
         updateCookieCounter();
     }
 
     function updateCookieCounter() {
-        $cookieCounterContainer.text(Math.round(cookieCounter));
+        $numberOfCookiesContainer.text(Math.round(cookieCounter));
+
         checkAutoClickerBtnStatus();
         checkMultiplierBtnStatus();
     }
 
     function updateAutoClickerValue() {
         $autoClickerValueContainer.text(Math.round(autoClickerValue * 100) / 100);
+
         updateCookiesPerSecond();
     }
 
@@ -157,23 +161,32 @@ jQuery(function ($) {
         $multiplierCostsContainer.text(multiplierCosts);
     }
 
+    function updateMultiplierValue() {
+        $multiplierValueContainer.text(Math.round(multiplierValue * 100) / 100);
+        $autoClickerGrowthContainer.text(Math.round(autoClickerGrowth * 100) / 100);
+    }
+
+    function updateMultiplierGrowth() {
+        $multiplierGrowthContainer.text(Math.round(multiplierGrowth * 100) / 100);
+    }
+
 
     function checkAutoClickerBtnStatus() {
-        if (cookieCounter >= autoClickerCosts && isButtonEnabled($autoClickerBtn)) {
-            $autoClickerBtn.removeClass('disabled');
+        if (cookieCounter >= autoClickerCosts && isButtonEnabled($autoClickerButton)) {
+            $autoClickerButton.removeClass('disabled');
         } else {
-            if (cookieCounter < autoClickerCosts && !isButtonEnabled($autoClickerBtn)) {
-                $autoClickerBtn.addClass('disabled');
+            if (cookieCounter < autoClickerCosts && !isButtonEnabled($autoClickerButton)) {
+                $autoClickerButton.addClass('disabled');
             }
         }
     }
 
     function checkMultiplierBtnStatus() {
-        if (cookieCounter >= multiplierCosts && isButtonEnabled($multiplierBtn)) {
-            $multiplierBtn.removeClass('disabled');
+        if (cookieCounter >= multiplierCosts && isButtonEnabled($multiplierButton)) {
+            $multiplierButton.removeClass('disabled');
         } else {
-            if (cookieCounter < multiplierCosts && !isButtonEnabled($multiplierBtn)) {
-                $multiplierBtn.addClass('disabled');
+            if (cookieCounter < multiplierCosts && !isButtonEnabled($multiplierButton)) {
+                $multiplierButton.addClass('disabled');
             }
         }
     }
