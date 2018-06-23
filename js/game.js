@@ -28,6 +28,19 @@ jQuery(function ($) {
     $multiplierValueContainer = $('#multiplier-value');
 
 
+    // rare click
+    $rareClickButton = $('#rare-click-btn');
+    $rareClickCosts = $('#rare-click-costs');
+    $rareClickGrowth = $('#rare-click-growth');
+    $rareClickValue = $('#rare-click-value');
+
+    // legendary click
+    $legendaryClickButton = $('#legendary-click-btn');
+    $legendaryClickCosts = $('#legendary-click-costs');
+    $legendaryClickGrowth = $('#legendary-click-growth');
+    $legendaryClickValue = $('#legendary-click-value');
+
+
     /**
      *  variables
      */
@@ -49,35 +62,72 @@ jQuery(function ($) {
     var multiplierGrowth = Math.log10(2) + 1;
     var multiplierIndex = 2.0;
 
+    // rare click
+    var rareClickCosts = 500;
+    var rareClickValue = 0.1;
+    var rareClickGrowth = 0.05;
+
+    var legendaryClickCosts = 1500;
+    var legendaryClickValue = 0.04;
+    var legendaryClickGrowth = 0.02;
+
+
 
     /**
      *  constants
      */
-
     const AUTO_CLICKER_COSTS_MULTIPLIER = 2;
+
     const MULTIPLIER_COSTS_MULTIPLIER = 4;
 
+    const PERCENT_MAX_VAL = 1;
+
+
     $(document).ready(function () {
-
-        // click on cookie
-        $cookieImage.on("click", function () {
-            handleCookieClick(cookieCounter);
-        });
-
-        // click on auto clicker
-        $autoClickerButton.on("click", function () {
-            handleAutoClickerClick();
-        });
-
-        // click on multiplier
-        $multiplierButton.on("click", function () {
-            handleMultiplierClick();
-        });
-
+      setupClickEvents();
     });
 
+    function setupClickEvents() {
+      // click on cookie
+      $cookieImage.on("click", function () {
+          handleCookieClick(cookieCounter);
+      });
+
+      // click on auto clicker
+      $autoClickerButton.on("click", function () {
+          handleAutoClickerClick();
+      });
+
+      // click on multiplier
+      $multiplierButton.on("click", function () {
+          handleMultiplierClick();
+      });
+
+      // rare click button click
+      $rareClickButton.on("click", function() {
+        handleRareClickClick($( this ));
+      });
+
+      // legendary click button click
+      $legendaryClickButton.on("click", function() {
+        handleLegendaryClickClick($( this ));
+      });
+    }
+
+
     function handleCookieClick() {
-        cookieCounter += autoClickerValue === 0 ? 1 : autoClickerValue;
+        var gain = multiplierValue;
+
+        // rare click increases by 40%
+        if(Math.random() <= rareClickValue) {
+            gain *= 1.4;
+        }
+        // legendary click doubles
+        if(Math.random() <= legendaryClickValue) {
+            gain *= 2;
+        }
+
+        cookieCounter += gain;
 
         updateCookieCounter(cookieCounter);
     }
@@ -126,6 +176,25 @@ jQuery(function ($) {
         }
     }
 
+    function handleRareClickClick($el) {
+        if(!$el.hasClass("disabled") && rareClickValue < PERCENT_MAX_VAL) {
+          cookieCounter -= rareClickCosts;
+          rareClickCosts *= 2;
+          rareClickValue += rareClickGrowth;
+          updateRareClick();
+        }
+    }
+
+    function handleLegendaryClickClick($el) {
+      if(!$el.hasClass('disabled') && legendaryClickValue < PERCENT_MAX_VAL) {
+        cookieCounter -= legendaryClickCosts;
+        legendaryClickCosts *= 3;
+        legendaryClickValue += legendaryClickGrowth;
+        updateLegendaryClick();
+      }
+    }
+
+
     function timer() {
         cookieCounter += autoClickerValue;
 
@@ -134,14 +203,11 @@ jQuery(function ($) {
 
     function updateCookieCounter() {
         $numberOfCookiesContainer.text(Math.round(cookieCounter));
-
-        checkAutoClickerBtnStatus();
-        checkMultiplierBtnStatus();
+        checkButtonStatus();
     }
 
     function updateAutoClickerValue() {
         $autoClickerValueContainer.text(Math.round(autoClickerValue * 100) / 100);
-
         updateCookiesPerSecond();
     }
 
@@ -181,6 +247,38 @@ jQuery(function ($) {
         }
     }
 
+    function updateRareClick() {
+      $rareClickCosts.text(rareClickCosts);
+      $rareClickValue.text(Math.round(rareClickValue * 100));
+      checkRareClickBtnStatus();
+    }
+
+    function updateLegendaryClick() {
+      $legendaryClickCosts.text(legendaryClickCosts);
+      $legendaryClickValue.text(Math.round(legendaryClickValue * 100));
+      checkLegendaryClickBtnStatus();
+    }
+
+    function checkLegendaryClickBtnStatus() {
+            if ((cookieCounter >= legendaryClickCosts && PERCENT_MAX_VAL > legendaryClickValue)  && isButtonEnabled($legendaryClickButton)) {
+                $legendaryClickButton.removeClass('disabled');
+            } else {
+                if ((cookieCounter < legendaryClickCosts || legendaryClickValue >= PERCENT_MAX_VAL) && !isButtonEnabled($legendaryClickButton)) {
+                    $legendaryClickButton.addClass('disabled');
+                }
+            }
+    }
+
+    function checkRareClickBtnStatus() {
+            if ((cookieCounter >= rareClickCosts && PERCENT_MAX_VAL > rareClickValue) && isButtonEnabled($rareClickButton)) {
+                $rareClickButton.removeClass('disabled');
+            } else {
+                if ((cookieCounter < rareClickCosts || rareClickValue >= PERCENT_MAX_VAL) && !isButtonEnabled($rareClickButton)) {
+                    $rareClickButton.addClass('disabled');
+                }
+            }
+    }
+
     function checkMultiplierBtnStatus() {
         if (cookieCounter >= multiplierCosts && isButtonEnabled($multiplierButton)) {
             $multiplierButton.removeClass('disabled');
@@ -189,5 +287,12 @@ jQuery(function ($) {
                 $multiplierButton.addClass('disabled');
             }
         }
+    }
+
+    function checkButtonStatus() {
+      checkAutoClickerBtnStatus();
+      checkMultiplierBtnStatus();
+      checkRareClickBtnStatus();
+      checkLegendaryClickBtnStatus();
     }
 });

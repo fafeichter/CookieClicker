@@ -68,33 +68,37 @@
                     <div class="list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">Rare Click</h5>
-                            <small><span class="badge badge-secondary badge-pill">0.07%</span></small>
+                            <small>
+                                <span class="badge badge-secondary badge-pill"> <span id="rare-click-value">10</span>%</span>
+                            </small>
                         </div>
                         <div class="marginbottom-10">
-                            <small>Increase the chance of getting 10% more cookies on a click.</small>
+                            <small>Increase the chance of getting 40% more cookies on a click.</small>
                             <br>
                             <small>
-                                <i><span>500</span> cookies required</i>
+                                <i><span id="rare-click-costs">500</span> cookies required</i>
                             </small>
                         </div>
                         <p class="mb-1">
-                            <button type="button" class="btn btn-success btn-sm disabled">+ 0.01%</button>
+                            <button type="button" class="btn btn-success btn-sm disabled" id="rare-click-btn">+ <span id="rare-click-value">5</span>%</button>
                         </p>
                     </div>
                     <div class="list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">Legendary Click</h5>
-                            <small><span class="badge badge-secondary badge-pill">0.006‰</span></small>
-                        </div>
+                            <small>
+                                <span class="badge badge-secondary badge-pill"> <span id="legendary-click-value">4</span>%</span>
+                            </small>
+                          </div>
                         <div class="marginbottom-10">
                             <small>Increase the chance of getting twice as much cookies on a click.</small>
                             <br>
                             <small>
-                                <i><span>1500</span> cookies required</i>
+                                <i><span id="legendary-click-costs">1500</span> cookies required</i>
                             </small>
                         </div>
                         <p class="mb-1">
-                            <button type="button" class="btn btn-success btn-sm disabled">+ 0.01‰</button>
+                            <button type="button" class="btn btn-success btn-sm disabled" id="legendary-click-btn">+ <span id="legendary-click-value">2</span>%</button>
                         </p>
                     </div>
                 </div>
